@@ -1,0 +1,21 @@
+{
+	"key.categories.mineshotrevived": "Mineshot Revived",
+	"key.mineshotrevived.capture": "Capture screenshot",
+	"key.mineshotrevived.ortho.clip": "Toggle clipping",
+	"key.mineshotrevived.ortho.mod": "MOD key",
+	"key.mineshotrevived.ortho.rotate_d": "Rotate down",
+	"key.mineshotrevived.ortho.rotate_f": "Front view",
+	"key.mineshotrevived.ortho.rotate_l": "Rotate left",
+	"key.mineshotrevived.ortho.rotate_r": "Rotate right",
+	"key.mineshotrevived.ortho.rotate_s": "Side view",
+	"key.mineshotrevived.ortho.rotate_t": "Top view",
+	"key.mineshotrevived.ortho.rotate_u": "Rotate up",
+	"key.mineshotrevived.ortho.toggle": "Ortographic camera",
+	"key.mineshotrevived.ortho.zoom_in": "Zoom in",
+	"key.mineshotrevived.ortho.zoom_out": "Zoom out",
+	"mineshotrevived.config.height": "Capture Height (px)",
+	"mineshotrevived.config.notify_dev": "Notify on dev-versions",
+	"mineshotrevived.config.title": "Mineshot Revived Configuration",
+	"mineshotrevived.config.width": "Capture Width (px)",
+	"mineshotrevived.orthomp": "Orthographic view is disabled in Multiplayer"
+}

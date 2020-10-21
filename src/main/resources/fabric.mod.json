@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "mineshotrevived",
+  "version": "${version}",
+
+  "name": "Mineshot Revived",
+  "description": "A revived version of Mineshot: \"A revamped version of Notch's huge screenshot function\" (and now for Fabric).",
+  "authors": [
+    "Pascal Roeleven",
+    "Barracuda (creater original Mineshot)"
+  ],
+  "contact": {
+  	"homepage": "https://github.com/pascallj/mineshot-revived-fabric",
+  	"issues": "https://github.com/pascallj/mineshot-revived-fabric/issues",
+    "sources": "https://github.com/pascallj/mineshot-revived-fabric"
+  },
+
+  "license": "GPL-3.0-or-later",
+
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "nl.pascalroeleven.minecraft.mineshotrevived.Mineshot"
+    ],
+    "modmenu": [
+      "nl.pascalroeleven.minecraft.mineshotrevived.client.config.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "mineshotrevived.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x",
+    "modmenu": ">=1.14.6"
+  }
+}
