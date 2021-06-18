@@ -107,9 +107,9 @@ public class OrthoViewHandler {
 	}
 
 	// Called by WorldRendererMixin
-	public void onRenderTick(float tickDelta) {
+	public Matrix4f onWorldRenderer(float tickDelta) {
 		if (!enabled) {
-			return;
+			return null;
 		}
 
 		// Update zoom and rotation
@@ -122,13 +122,6 @@ public class OrthoViewHandler {
 
 			tickPrevious = tick;
 			partialPrevious = partial;
-		}
-	}
-
-	// Called by WorldRendererMixin
-	public Matrix4f onWorldRenderer() {
-		if (!enabled) {
-			return null;
 		}
 
 		float width = zoom * (MC.getWindow().getFramebufferWidth()
