@@ -12,13 +12,13 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_ADD;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_MULTIPLY;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_SUBTRACT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_ALT;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.util.math.Matrix4f;
 import nl.pascalroeleven.minecraft.mineshotrevived.mixin.CameraInvoker;
 import nl.pascalroeleven.minecraft.mineshotrevived.util.ChatUtils;
 
@@ -123,15 +123,22 @@ public class OrthoViewHandler {
 			tickPrevious = tick;
 			partialPrevious = partial;
 		}
+	}
+
+	public Matrix4f onWorldRenderer() {
+		if (!enabled) {
+			return new Matrix4f();
+		}
 
 		float width = zoom * (MC.getWindow().getFramebufferWidth()
 				/ (float) MC.getWindow().getFramebufferHeight());
 		float height = zoom;
 
 		// Override projection matrix
-		RenderSystem.matrixMode(GL_PROJECTION);
-		RenderSystem.loadIdentity();
-		RenderSystem.ortho(-width, width, -height, height, clip ? 0 : -9999, 9999);
+		// Top and bottom are swapped inside projectionMatrix (which is basically equivalent to glOrtho)
+		Matrix4f matrix4f = Matrix4f.projectionMatrix(-width, width, height, -height, clip ? 0 : -9999, 9999);
+		RenderSystem.setProjectionMatrix(matrix4f);
+		return matrix4f;
 	}
 
 	// Called by KeyboardMixin
