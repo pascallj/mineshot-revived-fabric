@@ -1,7 +1,7 @@
 package nl.pascalroeleven.minecraft.mineshotrevived.client.config;
 
-import io.github.prospector.modmenu.api.ConfigScreenFactory;
-import io.github.prospector.modmenu.api.ModMenuApi;
+import com.terraformersmc.modmenu.api.ConfigScreenFactory;
+import com.terraformersmc.modmenu.api.ModMenuApi;
 import net.minecraft.client.MinecraftClient;
 
 public class ModMenuIntegration implements ModMenuApi {

@@ -19,7 +19,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	
 	// ModMenu API for configuration
-	modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
+	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
@@ -77,5 +77,12 @@ publishing {
 	repositories {
 		// uncomment to publish to the local maven
 		// mavenLocal()
+	}
+}
+
+repositories {
+	maven {
+		name = 'Modmenu'
+		url = 'https://maven.terraformersmc.com/releases/'
 	}
 }
