@@ -128,7 +128,7 @@ public class OrthoViewHandler {
 	// Called by WorldRendererMixin
 	public Matrix4f onWorldRenderer() {
 		if (!enabled) {
-			return new Matrix4f();
+			return null;
 		}
 
 		float width = zoom * (MC.getWindow().getFramebufferWidth()

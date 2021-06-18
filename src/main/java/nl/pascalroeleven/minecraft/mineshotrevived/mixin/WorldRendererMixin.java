@@ -18,11 +18,12 @@ import nl.pascalroeleven.minecraft.mineshotrevived.Mineshot;
 public class WorldRendererMixin {
 	@ModifyVariable(method = "render", at = @At("HEAD"))
 	private Matrix4f changeProjection(Matrix4f matrix4f) {
-		Matrix4f newmatrix4f = Mineshot.getOrthoViewHandler().onWorldRenderer();
-		if (newmatrix4f.equals(new Matrix4f())) {
+		Matrix4f newMatrix4f = Mineshot.getOrthoViewHandler().onWorldRenderer();
+
+		if (newMatrix4f == null) {
 			return matrix4f;
 		} else {
-			return newmatrix4f;
+			return newMatrix4f;
 		}
 	}
 
