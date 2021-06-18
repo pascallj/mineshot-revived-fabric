@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.option.KeyBinding;
 import nl.pascalroeleven.minecraft.mineshotrevived.client.capture.task.CaptureTask;
 import nl.pascalroeleven.minecraft.mineshotrevived.client.capture.task.RenderTickTask;
 import nl.pascalroeleven.minecraft.mineshotrevived.util.ChatUtils;

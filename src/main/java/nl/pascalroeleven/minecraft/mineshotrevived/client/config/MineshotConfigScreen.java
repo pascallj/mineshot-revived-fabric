@@ -3,17 +3,19 @@ package nl.pascalroeleven.minecraft.mineshotrevived.client.config;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 
 import net.minecraft.client.gui.Element;
+import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ScreenTexts;
-import net.minecraft.client.gui.screen.options.GameOptionsScreen;
-import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.gui.screen.option.GameOptionsScreen;
+import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.CheckboxWidget;
 import net.minecraft.client.gui.widget.ElementListWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.options.GameOptions;
+import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.TranslatableText;
 import nl.pascalroeleven.minecraft.mineshotrevived.Mineshot;
@@ -32,8 +34,8 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 	@Override
 	protected void init() {
 		this.optionsListWidget = new OptionsListWidget();
-		this.children.add(this.optionsListWidget);
-		this.addButton(new ButtonWidget(this.width / 2 - 100, this.height - 27, 200, 20,
+		this.addSelectableChild(this.optionsListWidget);
+		this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, this.height - 27, 200, 20,
 				ScreenTexts.DONE, (buttonWidget) -> {
 					onClose();
 				}));
@@ -79,9 +81,9 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 		}
 
 		private class OptionListEntry extends OptionsListWidget.Entry {
-			private AbstractButtonWidget field;
+			private ClickableWidget field;
 
-			private OptionListEntry(AbstractButtonWidget field) {
+			private OptionListEntry(ClickableWidget field) {
 				this.field = field;
 			}
 
@@ -98,6 +100,10 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 				field.x = MineshotConfigScreen.this.width / 2;
 				field.y = y;
 				field.render(matrices, mouseX, mouseY, tickDelta);
+			}
+
+			public List<? extends Selectable> method_37025() {
+				return Lists.newArrayList();
 			}
 		}
 

@@ -18,7 +18,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.option.KeyBinding;
 import nl.pascalroeleven.minecraft.mineshotrevived.mixin.CameraInvoker;
 import nl.pascalroeleven.minecraft.mineshotrevived.util.ChatUtils;
 
