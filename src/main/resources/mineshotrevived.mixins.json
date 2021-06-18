@@ -7,7 +7,6 @@
   ],
   "client": [
     "TitleScreenMixin",
-    "BackgroundRendererMixin",
     "KeyboardMixin",
     "CameraMixin",
     "WindowMixin",

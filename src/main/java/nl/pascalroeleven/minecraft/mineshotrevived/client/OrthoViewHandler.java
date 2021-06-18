@@ -106,7 +106,7 @@ public class OrthoViewHandler {
 		tick++;
 	}
 
-	// Called by BackgroundRendererMixin
+	// Called by WorldRendererMixin
 	public void onRenderTick(float tickDelta) {
 		if (!enabled) {
 			return;
@@ -125,6 +125,7 @@ public class OrthoViewHandler {
 		}
 	}
 
+	// Called by WorldRendererMixin
 	public Matrix4f onWorldRenderer() {
 		if (!enabled) {
 			return new Matrix4f();
