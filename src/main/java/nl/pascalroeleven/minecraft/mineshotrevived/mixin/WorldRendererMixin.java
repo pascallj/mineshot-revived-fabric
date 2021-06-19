@@ -22,4 +22,15 @@ public class WorldRendererMixin {
 			return newMatrix4f;
 		}
 	}
+
+	@ModifyVariable(method = "setupFrustum", at = @At("HEAD"), argsOnly = true)
+	private Matrix4f onSetupFrustum(Matrix4f matrix4f) {
+		Matrix4f newMatrix4f = Mineshot.getOrthoViewHandler().onSetupFrustum();
+
+		if (newMatrix4f == null) {
+			return matrix4f;
+		} else {
+			return newMatrix4f;
+		}
+	}
 }

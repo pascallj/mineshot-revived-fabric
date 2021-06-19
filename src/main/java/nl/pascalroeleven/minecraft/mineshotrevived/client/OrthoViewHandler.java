@@ -11,6 +11,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_8;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_ADD;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_MULTIPLY;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_SUBTRACT;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_DIVIDE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_ALT;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -54,8 +55,12 @@ public class OrthoViewHandler {
 			GLFW_KEY_KP_MULTIPLY, KEY_CATEGORY);
 	private final KeyBinding keyMod = new KeyBinding("key.mineshotrevived.ortho.mod",
 			GLFW_KEY_LEFT_ALT, KEY_CATEGORY);
+	private final KeyBinding key360 = new KeyBinding("key.mineshotrevived.ortho.render360",
+			GLFW_KEY_KP_DIVIDE, KEY_CATEGORY);
 
 	private boolean enabled;
+	private boolean render360;
+	private boolean frustumUpdate;
 	private boolean freeCam;
 	private boolean clip;
 
@@ -80,6 +85,7 @@ public class OrthoViewHandler {
 		KeyBindingHelper.registerKeyBinding(keyRotateS);
 		KeyBindingHelper.registerKeyBinding(keyClip);
 		KeyBindingHelper.registerKeyBinding(keyMod);
+		KeyBindingHelper.registerKeyBinding(key360);
 
 		reset();
 	}
@@ -135,6 +141,27 @@ public class OrthoViewHandler {
 		return matrix4f;
 	}
 
+	// Called by WorldRendererMixin
+	public Matrix4f onSetupFrustum() {
+		if (frustumUpdate) {
+			MC.worldRenderer.scheduleTerrainUpdate();
+			frustumUpdate = false;
+		}
+
+		if (!enabled || !render360) {
+			return null;
+		}
+
+		float width = zoom * (MC.getWindow().getFramebufferWidth()
+				/ (float) MC.getWindow().getFramebufferHeight());
+		float height = zoom;
+
+		// Override projection matrix
+		// Top and bottom are swapped inside projectionMatrix (which is basically equivalent to glOrtho)
+		Matrix4f matrix4f = Matrix4f.projectionMatrix(-width, width, height, -height, -9999, 9999);
+		return matrix4f;
+	}
+
 	// Called by KeyboardMixin
 	public void onKeyEvent() {
 		boolean mod = modifierKeyPressed();
@@ -159,10 +186,13 @@ public class OrthoViewHandler {
 		} else if (keyRotateS.isPressed()) {
 			xRot = 0;
 			yRot = mod ? 180 : 0;
+		} else if (key360.isPressed()) {
+			render360 = !render360;
+			frustumUpdate = true;
 		}
 
 		// Update stepped rotation/zoom controls
-		// Note: the smooth controls are handled in onRenderTick, since they need to be
+		// Note: the smooth controls are handled in onWorldRenderer, since they need to be
 		// executed on every frame
 		if (mod) {
 			updateZoomAndRotation(1);
@@ -176,6 +206,7 @@ public class OrthoViewHandler {
 	private void reset() {
 		freeCam = false;
 		clip = false;
+		render360 = false;
 
 		zoom = 8;
 		xRot = 30;
@@ -228,9 +259,17 @@ public class OrthoViewHandler {
 	private void updateZoomAndRotation(double multi) {
 		if (keyZoomIn.isPressed()) {
 			zoom *= 1 - ZOOM_STEP * multi;
+
+			// Because zooming is not a native game mechanic, it doesn't trigger a terrain update
+			if (render360)
+				MC.worldRenderer.scheduleTerrainUpdate();
 		}
 		if (keyZoomOut.isPressed()) {
 			zoom *= 1 + ZOOM_STEP * multi;
+
+			// Because zooming is not a native game mechanic, it doesn't trigger a terrain update
+			if (render360)
+				MC.worldRenderer.scheduleTerrainUpdate();
 		}
 
 		if (keyRotateL.isPressed()) {

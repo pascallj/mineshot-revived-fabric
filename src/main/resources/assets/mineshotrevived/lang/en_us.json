@@ -13,6 +13,7 @@
 	"key.mineshotrevived.ortho.toggle": "Ortographic camera",
 	"key.mineshotrevived.ortho.zoom_in": "Zoom in",
 	"key.mineshotrevived.ortho.zoom_out": "Zoom out",
+	"key.mineshotrevived.ortho.render360": "Render full 360 degrees",
 	"mineshotrevived.config.height": "Capture Height (px)",
 	"mineshotrevived.config.notify_dev": "Notify on dev-versions",
 	"mineshotrevived.config.title": "Mineshot Revived Configuration",
