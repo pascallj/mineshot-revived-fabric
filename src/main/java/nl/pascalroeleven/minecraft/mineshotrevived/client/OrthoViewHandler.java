@@ -226,10 +226,6 @@ public class OrthoViewHandler {
 		}
 
 		if (!enabled) {
-			/* TODO: Implement Clippinghelper
-			 * clippingEnabled = clippingHelper.isEnabled();
-			 * clippingHelper.setEnabled(false);
-			 */
 			reset();
 		}
 
@@ -237,10 +233,6 @@ public class OrthoViewHandler {
 	}
 
 	private void disable() {
-		if (enabled) {
-			/* clippingHelper.setEnabled(clippingEnabled); */
-		}
-
 		enabled = false;
 	}
 
