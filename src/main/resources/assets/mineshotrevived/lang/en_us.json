@@ -16,6 +16,7 @@
 	"key.mineshotrevived.ortho.render360": "Render full 360 degrees",
 	"mineshotrevived.config.height": "Capture Height (px)",
 	"mineshotrevived.config.notify_dev": "Notify on dev-versions",
+	"mineshotrevived.config.notify_incompatible": "Notify on incompatible versions",
 	"mineshotrevived.config.title": "Mineshot Revived Configuration",
 	"mineshotrevived.config.width": "Capture Width (px)",
 	"mineshotrevived.orthomp": "Orthographic view is disabled in Multiplayer"

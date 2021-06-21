@@ -26,6 +26,7 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 	private TextFieldWidget captureWidth;
 	private TextFieldWidget captureHeight;
 	private CheckboxWidget notifyDev;
+	private CheckboxWidget notifyIncompatible;
 
 	protected MineshotConfigScreen(Screen parent, GameOptions options) {
 		super(parent, options, new TranslatableText("mineshotrevived.config.title"));
@@ -46,6 +47,7 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 		this.properties.set("captureWidth", captureWidth.getText());
 		this.properties.set("captureHeight", captureHeight.getText());
 		this.properties.set("notifyDev", notifyDev.isChecked() ? "true" : "false");
+		this.properties.set("notifyIncompatible", notifyIncompatible.isChecked() ? "true" : "false");
 		super.onClose();
 	}
 
@@ -69,15 +71,20 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 					20, new TranslatableText("mineshotrevived.config.height"));
 			notifyDev = new CheckboxWidget(0, 0, 20, 20,
 					new TranslatableText("mineshotrevived.config.notify_dev"), false, false);
+			notifyIncompatible = new CheckboxWidget(0, 0, 20, 20,
+					new TranslatableText("mineshotrevived.config.notify_incompatible"), false, false);
 
 			captureWidth.setText(properties.get("captureWidth"));
 			captureHeight.setText(properties.get("captureHeight"));
 			if (properties.get("notifyDev").equalsIgnoreCase("true"))
 				notifyDev.onPress();
+			if (properties.get("notifyIncompatible").equalsIgnoreCase("true"))
+				notifyIncompatible.onPress();
 
 			this.addEntry(new OptionListEntry(captureWidth));
 			this.addEntry(new OptionListEntry(captureHeight));
 			this.addEntry(new OptionListEntry(notifyDev));
+			this.addEntry(new OptionListEntry(notifyIncompatible));
 		}
 
 		private class OptionListEntry extends OptionsListWidget.Entry {

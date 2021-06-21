@@ -70,7 +70,13 @@ public class Updater {
 					return;
 			}
 
-			SemanticVersion update = SemanticVersion.parse(jsonObject.get(releaseVersion).getAsJsonObject().get(channel).getAsString());
+			SemanticVersion update;
+			if (properties.get("notifyIncompatible").equalsIgnoreCase("true")) {
+				update = SemanticVersion.parse(jsonObject.get(channel).getAsString());
+			} else {
+				update = SemanticVersion.parse(jsonObject.get(releaseVersion).getAsJsonObject().get(channel).getAsString());
+			}
+
 			SemanticVersion currentVersion = SemanticVersion.parse(current);
 			if (currentVersion.compareTo(update) < 0)
 				newVersion = update.getFriendlyString();

@@ -29,6 +29,7 @@ public class PropertiesHandler {
 		defaults.setProperty("captureWidth", "3840");
 		defaults.setProperty("captureHeight", "2160");
 		defaults.setProperty("notifyDev", "false");
+		defaults.setProperty("notifyIncompatible", "false");
 
 		if (configFile.exists()) {
 			try (FileInputStream stream = new FileInputStream(configFile)) {
@@ -111,6 +112,7 @@ public class PropertiesHandler {
 				return false;
 			}
 		case "notifyDev":
+		case "notifyIncompatible":
 			try {
 				if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false"))
 					return true;
