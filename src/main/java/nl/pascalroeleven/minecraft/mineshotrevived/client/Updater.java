@@ -16,10 +16,12 @@ import com.google.gson.JsonParser;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.VersionParsingException;
+import net.minecraft.client.MinecraftClient;
 import nl.pascalroeleven.minecraft.mineshotrevived.Mineshot;
 import nl.pascalroeleven.minecraft.mineshotrevived.client.config.PropertiesHandler;
 
 public class Updater {
+	private static final MinecraftClient MC = MinecraftClient.getInstance();
 	private PropertiesHandler properties = Mineshot.getPropertiesHandler();
 	private String newVersion = null;
 	private final String DOWNLOAD_URL = "https://pascallj.github.io/mineshot-revived-fabric/versions.json";
@@ -49,7 +51,26 @@ public class Updater {
 		}
 
 		try {
-			SemanticVersion update = SemanticVersion.parse(jsonObject.get(channel).getAsString());
+			String releaseVersion = MC.getGame().getVersion().getReleaseTarget();
+
+			// If no direct match for the version, check for wildcard version
+			if (jsonObject.get(releaseVersion) == null) {
+				SemanticVersion mcVersion = SemanticVersion.parse(releaseVersion);
+				int i = mcVersion.getVersionComponentCount();
+				do {
+					if (i == 0) {
+						releaseVersion = null;
+						break;
+					}
+					releaseVersion = buildWildcardVersion(mcVersion, i);
+					i--;
+				} while (jsonObject.get(releaseVersion) == null);
+
+				if (releaseVersion == null)
+					return;
+			}
+
+			SemanticVersion update = SemanticVersion.parse(jsonObject.get(releaseVersion).getAsJsonObject().get(channel).getAsString());
 			SemanticVersion currentVersion = SemanticVersion.parse(current);
 			if (currentVersion.compareTo(update) < 0)
 				newVersion = update.getFriendlyString();
@@ -93,5 +114,19 @@ public class Updater {
 		}
 
 		return null;
+	}
+
+	private String buildWildcardVersion(SemanticVersion version, int components) {
+		// Build the version string with last component as wildcard
+		String wildcardVersion = "";
+		for (int i = 0; i <= components-1; i++) {
+			if (i == components-1) {
+				wildcardVersion += "x";
+				break;
+			}
+			wildcardVersion += version.getVersionComponent(i) + "." ;
+		}
+
+		return wildcardVersion;
 	}
 }
