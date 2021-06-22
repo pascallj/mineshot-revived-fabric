@@ -70,7 +70,7 @@ public class PropertiesHandler {
 
 	public void set(String key, String value) {
 		// Only set if validated and only store if value is different
-		if (validate(key, value) && properties.setProperty(key, value) != value)
+		if (validate(key, value) && !properties.setProperty(key, value).equals(value))
 			writeConfig = true;
 	}
 
