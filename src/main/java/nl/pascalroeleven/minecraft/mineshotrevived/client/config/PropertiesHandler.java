@@ -24,8 +24,9 @@ public class PropertiesHandler {
 	private Properties defaults = new Properties();
 	private Properties properties = new Properties();
 
+	private boolean writeConfig = false;
+
 	public PropertiesHandler() {
-		boolean writeConfig = false;
 		defaults.setProperty("captureWidth", "3840");
 		defaults.setProperty("captureHeight", "2160");
 		defaults.setProperty("notifyDev", "false");
@@ -60,8 +61,7 @@ public class PropertiesHandler {
 			}
 		}
 
-		if (writeConfig)
-			storeProperties();
+		storeProperties();
 	}
 
 	public String get(String key) {
@@ -71,10 +71,10 @@ public class PropertiesHandler {
 	public void set(String key, String value) {
 		// Only set if validated and only store if value is different
 		if (validate(key, value) && properties.setProperty(key, value) != value)
-			storeProperties();
+			writeConfig = true;
 	}
 
-	private void storeProperties() {
+	public void storeProperties() {
 		if (!Files.exists(configDir)) {
 			try {
 				Files.createDirectory(configDir);
@@ -84,11 +84,14 @@ public class PropertiesHandler {
 			}
 		}
 
-		try (FileOutputStream stream = new FileOutputStream(configFile)) {
-			properties.store(stream, "Mineshot Revived properties file");
-		} catch (IOException e) {
-			LOGGER.warn("[Mineshot] Could not store property file '" + configFile.getAbsolutePath()
-					+ "'", e);
+		if (writeConfig) {
+			try (FileOutputStream stream = new FileOutputStream(configFile)) {
+				properties.store(stream, "Mineshot Revived properties file");
+				writeConfig = false;
+			} catch (IOException e) {
+				LOGGER.warn("[Mineshot] Could not store property file '" + configFile.getAbsolutePath()
+						+ "'", e);
+			}
 		}
 	}
 

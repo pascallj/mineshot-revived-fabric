@@ -48,6 +48,7 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 		this.properties.set("captureHeight", captureHeight.getText());
 		this.properties.set("notifyDev", notifyDev.isChecked() ? "true" : "false");
 		this.properties.set("notifyIncompatible", notifyIncompatible.isChecked() ? "true" : "false");
+		this.properties.storeProperties();
 		super.onClose();
 	}
 
