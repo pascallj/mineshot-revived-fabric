@@ -105,23 +105,21 @@ public class PropertiesHandler {
 
 	private boolean validate(String key, String value) {
 		switch (key) {
-		case "captureWidth":
-		case "captureHeight":
-			try {
-				int i = Integer.parseInt(value);
-				if (between(i, 1, MAX_TARGA_SIZE))
-					return true;
-			} catch (NumberFormatException e) {
-				return false;
-			}
-		case "notifyDev":
-		case "notifyIncompatible":
-			try {
+			case "captureWidth":
+			case "captureHeight":
+				try {
+					int i = Integer.parseInt(value);
+					if (between(i, 1, MAX_TARGA_SIZE))
+						return true;
+				} catch (NumberFormatException e) {
+					return false;
+				}
+				break;
+			case "notifyDev":
+			case "notifyIncompatible":
 				if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false"))
 					return true;
-			} catch (NumberFormatException e) {
-				return false;
-			}
+				break;
 		}
 
 		return false;
