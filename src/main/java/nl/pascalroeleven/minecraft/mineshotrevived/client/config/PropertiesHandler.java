@@ -19,7 +19,7 @@ public class PropertiesHandler {
 	private static final int MAX_TARGA_SIZE = 0xffff;
 
 	private Path configDir = FabricLoader.getInstance().getConfigDir();
-	private File configFile = new File(configDir.toFile(), "mineshot-revived.properties");;
+	private File configFile = new File(configDir.toFile(), "mineshot-revived.properties");
 
 	private Properties defaults = new Properties();
 	private Properties properties = new Properties();
@@ -43,11 +43,19 @@ public class PropertiesHandler {
 			writeConfig = true;
 		}
 
-		// Validate all values
+		// Validate all values and remove ones we don't recognize
 		for (Enumeration<?> e = properties.propertyNames(); e.hasMoreElements();) {
 			String key = (String) e.nextElement();
+
 			if (!validate(key)) {
-				properties.setProperty(key, defaults.getProperty(key));
+				String defaultValue = defaults.getProperty(key);
+
+				if (defaultValue != null) {
+					properties.setProperty(key, defaultValue);
+				} else {
+					properties.remove(key);
+				}
+
 				writeConfig = true;
 			}
 		}
@@ -55,7 +63,7 @@ public class PropertiesHandler {
 		// Make sure defaults are also present in properties file
 		for (Enumeration<?> e = defaults.propertyNames(); e.hasMoreElements();) {
 			String key = (String) e.nextElement();
-			if (properties.getProperty(key) == null) {
+			if (!properties.containsKey(key)) {
 				properties.setProperty(key, defaults.getProperty(key));
 				writeConfig = true;
 			}
