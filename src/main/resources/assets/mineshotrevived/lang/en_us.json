@@ -18,6 +18,5 @@
 	"mineshotrevived.config.notify_dev": "Notify on dev-versions",
 	"mineshotrevived.config.notify_incompatible": "Notify on incompatible versions",
 	"mineshotrevived.config.title": "Mineshot Revived Configuration",
-	"mineshotrevived.config.width": "Capture Width (px)",
-	"mineshotrevived.orthomp": "Orthographic view is disabled in Multiplayer"
+	"mineshotrevived.config.width": "Capture Width (px)"
 }

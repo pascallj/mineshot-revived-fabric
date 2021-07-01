@@ -9,9 +9,9 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_6;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_7;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_8;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_ADD;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_DIVIDE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_MULTIPLY;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_SUBTRACT;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_DIVIDE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_ALT;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -21,7 +21,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.util.math.Matrix4f;
 import nl.pascalroeleven.minecraft.mineshotrevived.mixin.CameraInvoker;
-import nl.pascalroeleven.minecraft.mineshotrevived.util.ChatUtils;
 
 public class OrthoViewHandler {
 	private static final MinecraftClient MC = MinecraftClient.getInstance();
@@ -217,14 +216,6 @@ public class OrthoViewHandler {
 	}
 
 	private void enable() {
-		// Disable in multiplayer
-		// Of course, programmers could just delete this check and abuse the
-		// orthographic camera, but at least the official build won't support it
-		if (!MC.isInSingleplayer()) {
-			ChatUtils.print("mineshotrevived.orthomp");
-			return;
-		}
-
 		if (!enabled) {
 			reset();
 		}
