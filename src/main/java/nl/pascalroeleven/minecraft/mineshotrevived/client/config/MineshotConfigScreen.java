@@ -110,7 +110,7 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 				field.render(matrices, mouseX, mouseY, tickDelta);
 			}
 
-			public List<? extends Selectable> method_37025() {
+			public List<? extends Selectable> selectableChildren() {
 				return Lists.newArrayList();
 			}
 		}
