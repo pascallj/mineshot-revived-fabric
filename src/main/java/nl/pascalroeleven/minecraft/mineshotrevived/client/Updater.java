@@ -15,6 +15,7 @@ import com.google.gson.JsonSyntaxException;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.SemanticVersion;
+import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.VersionParsingException;
 import net.minecraft.client.MinecraftClient;
 import nl.pascalroeleven.minecraft.mineshotrevived.Mineshot;
@@ -78,7 +79,7 @@ public class Updater {
 			}
 
 			SemanticVersion currentVersion = SemanticVersion.parse(current);
-			if (currentVersion.compareTo(update) < 0)
+			if (currentVersion.compareTo((Version) update) < 0)
 				newVersion = update.getFriendlyString();
 		} catch (VersionParsingException e) {
 			e.printStackTrace();
