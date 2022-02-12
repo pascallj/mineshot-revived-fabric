@@ -10,8 +10,8 @@ import java.net.URLConnection;
 import org.apache.commons.io.IOUtils;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.SemanticVersion;
@@ -114,8 +114,8 @@ public class Updater {
 
 	private JsonObject parseJson(String json) {
 		try {
-			return new JsonParser().parse(json).getAsJsonObject();
-		} catch (JsonParseException e) {
+			return JsonParser.parseString(json).getAsJsonObject();
+		} catch (JsonSyntaxException e) {
 			e.printStackTrace();
 		}
 
