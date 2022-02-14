@@ -157,7 +157,8 @@ public class OrthoViewHandler {
 
 		// Override projection matrix
 		// Top and bottom are swapped inside projectionMatrix (which is basically equivalent to glOrtho)
-		Matrix4f matrix4f = Matrix4f.projectionMatrix(-width, width, height, -height, -9999, 9999);
+		// FIXME: For some reason the client crashes now when clipping too much here.
+		Matrix4f matrix4f = Matrix4f.projectionMatrix(-Math.max(10, width), Math.max(10, width), Math.max(10, height), -Math.max(10, height), -9999, 9999);
 		return matrix4f;
 	}
 
