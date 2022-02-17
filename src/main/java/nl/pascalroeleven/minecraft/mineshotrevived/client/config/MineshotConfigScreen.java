@@ -60,7 +60,7 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
 		this.renderBackground(matrices);
 		this.optionsListWidget.render(matrices, mouseX, mouseY, delta);
-		drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 20, 16777215);
+		drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 20, 0xFFFFFF);
 		super.render(matrices, mouseX, mouseY, delta);
 	}
 
@@ -100,7 +100,18 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 			this.addEntry(new OptionListEntry(yRotation));
 		}
 
+		@Override
+	    protected int getScrollbarPositionX() {
+	        return super.getScrollbarPositionX() + 15;
+	    }
+
+		@Override
+	    public int getRowWidth() {
+	        return super.getRowWidth() + 32;
+	    }
+
 		private class OptionListEntry extends OptionsListWidget.Entry {
+			private static final int MARGIN = 125;
 			private ClickableWidget field;
 
 			private OptionListEntry(ClickableWidget field) {
@@ -116,8 +127,8 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 			public void render(MatrixStack matrices, int index, int y, int x, int entryWidth,
 					int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
 				textRenderer.draw(matrices, field.getMessage(),
-						MineshotConfigScreen.this.width / 2 - 150, y + 7, 0xFFFFFF);
-				field.x = MineshotConfigScreen.this.width / 2;
+						MineshotConfigScreen.this.width / 2 - MARGIN, y + 7, 0xFFFFFF);
+				field.x = MineshotConfigScreen.this.width / 2 + MARGIN - 50;
 				field.y = y;
 				field.render(matrices, mouseX, mouseY, tickDelta);
 			}
