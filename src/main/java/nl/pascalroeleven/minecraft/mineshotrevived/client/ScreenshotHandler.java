@@ -85,8 +85,7 @@ public class ScreenshotHandler {
 	}
 
 	private Path getScreenshotFile() {
-		@SuppressWarnings("deprecation")
-		Path dir = FabricLoader.getInstance().getGameDirectory().toPath().resolve("screenshots");
+		Path dir = FabricLoader.getInstance().getGameDir().resolve("screenshots");
 
 		try {
 			if (!Files.exists(dir)) {
