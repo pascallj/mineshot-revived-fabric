@@ -25,6 +25,8 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 	private OptionsListWidget optionsListWidget;
 	private TextFieldWidget captureWidth;
 	private TextFieldWidget captureHeight;
+	private TextFieldWidget xRotation;
+	private TextFieldWidget yRotation;
 	private CheckboxWidget notifyDev;
 	private CheckboxWidget notifyIncompatible;
 
@@ -48,6 +50,8 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 		this.properties.set("captureHeight", captureHeight.getText());
 		this.properties.set("notifyDev", notifyDev.isChecked() ? "true" : "false");
 		this.properties.set("notifyIncompatible", notifyIncompatible.isChecked() ? "true" : "false");
+		this.properties.set("xRotation", xRotation.getText());
+		this.properties.set("yRotation", yRotation.getText());
 		this.properties.storeProperties();
 		super.onClose();
 	}
@@ -74,6 +78,10 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 					new TranslatableText("mineshotrevived.config.notify_dev"), false, false);
 			notifyIncompatible = new CheckboxWidget(0, 0, 20, 20,
 					new TranslatableText("mineshotrevived.config.notify_incompatible"), false, false);
+			xRotation = new TextFieldWidget(MineshotConfigScreen.this.textRenderer, 0, 0, 50,
+					20, new TranslatableText("mineshotrevived.config.xrotation"));
+			yRotation = new TextFieldWidget(MineshotConfigScreen.this.textRenderer, 0, 0, 50,
+					20, new TranslatableText("mineshotrevived.config.yrotation"));
 
 			captureWidth.setText(properties.get("captureWidth"));
 			captureHeight.setText(properties.get("captureHeight"));
@@ -81,11 +89,15 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 				notifyDev.onPress();
 			if (properties.get("notifyIncompatible").equalsIgnoreCase("true"))
 				notifyIncompatible.onPress();
+			xRotation.setText(properties.get("xRotation"));
+			yRotation.setText(properties.get("yRotation"));
 
 			this.addEntry(new OptionListEntry(captureWidth));
 			this.addEntry(new OptionListEntry(captureHeight));
 			this.addEntry(new OptionListEntry(notifyDev));
 			this.addEntry(new OptionListEntry(notifyIncompatible));
+			this.addEntry(new OptionListEntry(xRotation));
+			this.addEntry(new OptionListEntry(yRotation));
 		}
 
 		private class OptionListEntry extends OptionsListWidget.Entry {

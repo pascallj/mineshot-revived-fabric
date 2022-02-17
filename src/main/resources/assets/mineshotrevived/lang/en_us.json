@@ -18,5 +18,7 @@
 	"mineshotrevived.config.notify_dev": "Notify on dev-versions",
 	"mineshotrevived.config.notify_incompatible": "Notify on incompatible versions",
 	"mineshotrevived.config.title": "Mineshot Revived Configuration",
-	"mineshotrevived.config.width": "Capture Width (px)"
+	"mineshotrevived.config.width": "Capture Width (px)",
+	"mineshotrevived.config.xrotation": "Default rotation angle x-axis",
+	"mineshotrevived.config.yrotation": "Default rotation angle y-axis"
 }

@@ -8,9 +8,9 @@ import nl.pascalroeleven.minecraft.mineshotrevived.client.Updater;
 import nl.pascalroeleven.minecraft.mineshotrevived.client.config.PropertiesHandler;
 
 public class Mineshot implements ModInitializer {
+	private static PropertiesHandler properties = new PropertiesHandler();
 	private static OrthoViewHandler ovh = new OrthoViewHandler();
 	private static ScreenshotHandler ssh = new ScreenshotHandler();
-	private static PropertiesHandler properties = new PropertiesHandler();
 	private static Updater updater = new Updater();
 
 	@Override

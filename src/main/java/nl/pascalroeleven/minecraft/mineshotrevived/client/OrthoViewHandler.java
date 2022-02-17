@@ -20,10 +20,13 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.util.math.Matrix4f;
+import nl.pascalroeleven.minecraft.mineshotrevived.Mineshot;
+import nl.pascalroeleven.minecraft.mineshotrevived.client.config.PropertiesHandler;
 import nl.pascalroeleven.minecraft.mineshotrevived.mixin.CameraInvoker;
 
 public class OrthoViewHandler {
 	private static final MinecraftClient MC = MinecraftClient.getInstance();
+	private static final PropertiesHandler properties = Mineshot.getPropertiesHandler();
 	private static final String KEY_CATEGORY = "key.categories.mineshotrevived";
 	private static final float ZOOM_STEP = 0.5f;
 	private static final float ROTATE_STEP = 15;
@@ -209,8 +212,8 @@ public class OrthoViewHandler {
 		render360 = false;
 
 		zoom = 8;
-		xRot = 30;
-		yRot = -45;
+		xRot = Integer.parseInt(properties.get("xRotation"));
+		yRot = Integer.parseInt(properties.get("yRotation"));
 		tick = 0;
 		tickPrevious = 0;
 		partialPrevious = 0;

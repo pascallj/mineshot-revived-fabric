@@ -17,6 +17,7 @@ import net.fabricmc.loader.api.FabricLoader;
 public class PropertiesHandler {
 	private static final Logger LOGGER = LogManager.getLogger();
 	private static final int MAX_TARGA_SIZE = 0xffff;
+	private static final int MAX_DEGREES = 360;
 
 	private Path configDir = FabricLoader.getInstance().getConfigDir();
 	private File configFile = new File(configDir.toFile(), "mineshot-revived.properties");
@@ -31,6 +32,8 @@ public class PropertiesHandler {
 		defaults.setProperty("captureHeight", "2160");
 		defaults.setProperty("notifyDev", "false");
 		defaults.setProperty("notifyIncompatible", "false");
+		defaults.setProperty("xRotation", "30");
+		defaults.setProperty("yRotation", "-45");
 
 		if (configFile.exists()) {
 			try (FileInputStream stream = new FileInputStream(configFile)) {
@@ -127,6 +130,16 @@ public class PropertiesHandler {
 			case "notifyIncompatible":
 				if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false"))
 					return true;
+				break;
+			case "xRotation":
+			case "yRotation":
+				try {
+					int i = Integer.parseInt(value);
+					if (between(i, -MAX_DEGREES, MAX_DEGREES))
+						return true;
+				} catch (NumberFormatException e) {
+					return false;
+				}
 				break;
 		}
 
