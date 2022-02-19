@@ -13,7 +13,7 @@ The majority of the code is based on the original [Mineshot by Barracuda](https:
 
 The main purpose of this project is to keep Mineshot alive by updating for newer Minecraft/Fabric versions. I previously ported a version for [Minecraft Forge](https://github.com/pascallj/mineshot-revived) as well, but during the development I discovered that I prefer Fabric much more. Especially the fast updates for new Minecraft versions. I'll keep the old project around for now, but I am not sure if there will be any future updates.
 
-There is support for 1.17, while an old version is available for 1.16.x
+There is support for Minecraft 1.18.x, while old versions are available for 1.17 and 1.16.x.
 
 ## Requirements
 Both the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api) and [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu) are required for this mod to function.
@@ -40,7 +40,7 @@ The controls are slightly different compared to the original Mineshot:
 
 The key-bindings can be changed in the Minecraft Controls menu.
 
-The configuration menu can be accessed via Mod Menu options. In here you can change the resolution of the screenshot and if you want to be notified of new development versions (you will always be notified on the title screen of new stable versions). 
+The configuration menu can be accessed via Mod Menu options. In here you can change the resolution of the screenshot and if you want to be notified of new development versions (you will always be notified on the title screen of new stable versions).
 
 Please note that the screenshots created will be huge (4K is already 23,7 MB), so choose your resolution carefully. The screenshot will be a Targa image file and will therefore be limited to 65535 by 65535 pixels.
 
