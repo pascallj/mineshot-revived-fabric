@@ -37,6 +37,7 @@ The controls are slightly different compared to the original Mineshot:
 * Minus: Zoom out
 * Multiply: Turn clipping off
 * Divide: Render full 360 degrees around player
+* Decimal point (Upcoming): Circle background between sky, red, and white
 
 The key-bindings can be changed in the Minecraft Controls menu.
 
