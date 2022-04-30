@@ -17,7 +17,7 @@ import net.minecraft.client.gui.widget.ElementListWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import nl.pascalroeleven.minecraft.mineshotrevived.Mineshot;
 
 public class MineshotConfigScreen extends GameOptionsScreen {
@@ -31,7 +31,7 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 	private CheckboxWidget notifyIncompatible;
 
 	protected MineshotConfigScreen(Screen parent, GameOptions options) {
-		super(parent, options, new TranslatableText("mineshotrevived.config.title"));
+		super(parent, options, Text.translatable("mineshotrevived.config.title"));
 	}
 
 	@Override
@@ -40,12 +40,12 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 		this.addSelectableChild(this.optionsListWidget);
 		this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, this.height - 27, 200, 20,
 				ScreenTexts.DONE, (buttonWidget) -> {
-					onClose();
+					close();
 				}));
 	}
 
 	@Override
-	public void onClose() {
+	public void close() {
 		this.properties.set("captureWidth", captureWidth.getText());
 		this.properties.set("captureHeight", captureHeight.getText());
 		this.properties.set("notifyDev", notifyDev.isChecked() ? "true" : "false");
@@ -53,7 +53,7 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 		this.properties.set("xRotation", xRotation.getText());
 		this.properties.set("yRotation", yRotation.getText());
 		this.properties.storeProperties();
-		super.onClose();
+		super.close();
 	}
 
 	@Override
@@ -71,17 +71,17 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 					24);
 
 			captureWidth = new TextFieldWidget(MineshotConfigScreen.this.textRenderer, 0, 0, 50, 20,
-					new TranslatableText("mineshotrevived.config.width"));
+					Text.translatable("mineshotrevived.config.width"));
 			captureHeight = new TextFieldWidget(MineshotConfigScreen.this.textRenderer, 0, 0, 50,
-					20, new TranslatableText("mineshotrevived.config.height"));
+					20, Text.translatable("mineshotrevived.config.height"));
 			notifyDev = new CheckboxWidget(0, 0, 20, 20,
-					new TranslatableText("mineshotrevived.config.notify_dev"), false, false);
+					Text.translatable("mineshotrevived.config.notify_dev"), false, false);
 			notifyIncompatible = new CheckboxWidget(0, 0, 20, 20,
-					new TranslatableText("mineshotrevived.config.notify_incompatible"), false, false);
+					Text.translatable("mineshotrevived.config.notify_incompatible"), false, false);
 			xRotation = new TextFieldWidget(MineshotConfigScreen.this.textRenderer, 0, 0, 50,
-					20, new TranslatableText("mineshotrevived.config.xrotation"));
+					20, Text.translatable("mineshotrevived.config.xrotation"));
 			yRotation = new TextFieldWidget(MineshotConfigScreen.this.textRenderer, 0, 0, 50,
-					20, new TranslatableText("mineshotrevived.config.yrotation"));
+					20, Text.translatable("mineshotrevived.config.yrotation"));
 
 			captureWidth.setText(properties.get("captureWidth"));
 			captureHeight.setText(properties.get("captureHeight"));

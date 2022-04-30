@@ -8,6 +8,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_5;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_6;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_7;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_8;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_DECIMAL;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_ADD;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_DIVIDE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_MULTIPLY;
@@ -33,38 +34,40 @@ public class OrthoViewHandler {
 	private static final float ROTATE_SPEED = 4;
 	private static final float SECONDS_PER_TICK = 1f / 20f;
 
-	private final KeyBinding keyToggle = new KeyBinding("key.mineshotrevived.ortho.toggle",
-			GLFW_KEY_KP_5, KEY_CATEGORY);
-	private final KeyBinding keyZoomIn = new KeyBinding("key.mineshotrevived.ortho.zoom_in",
-			GLFW_KEY_KP_ADD, KEY_CATEGORY);
-	private final KeyBinding keyZoomOut = new KeyBinding("key.mineshotrevived.ortho.zoom_out",
-			GLFW_KEY_KP_SUBTRACT, KEY_CATEGORY);
-	private final KeyBinding keyRotateL = new KeyBinding("key.mineshotrevived.ortho.rotate_l",
-			GLFW_KEY_KP_4, KEY_CATEGORY);
-	private final KeyBinding keyRotateR = new KeyBinding("key.mineshotrevived.ortho.rotate_r",
-			GLFW_KEY_KP_6, KEY_CATEGORY);
-	private final KeyBinding keyRotateU = new KeyBinding("key.mineshotrevived.ortho.rotate_u",
-			GLFW_KEY_KP_8, KEY_CATEGORY);
-	private final KeyBinding keyRotateD = new KeyBinding("key.mineshotrevived.ortho.rotate_d",
-			GLFW_KEY_KP_2, KEY_CATEGORY);
-	private final KeyBinding keyRotateT = new KeyBinding("key.mineshotrevived.ortho.rotate_t",
-			GLFW_KEY_KP_7, KEY_CATEGORY);
-	private final KeyBinding keyRotateF = new KeyBinding("key.mineshotrevived.ortho.rotate_f",
-			GLFW_KEY_KP_1, KEY_CATEGORY);
-	private final KeyBinding keyRotateS = new KeyBinding("key.mineshotrevived.ortho.rotate_s",
-			GLFW_KEY_KP_3, KEY_CATEGORY);
-	private final KeyBinding keyClip = new KeyBinding("key.mineshotrevived.ortho.clip",
-			GLFW_KEY_KP_MULTIPLY, KEY_CATEGORY);
-	private final KeyBinding keyMod = new KeyBinding("key.mineshotrevived.ortho.mod",
-			GLFW_KEY_LEFT_ALT, KEY_CATEGORY);
-	private final KeyBinding key360 = new KeyBinding("key.mineshotrevived.ortho.render360",
-			GLFW_KEY_KP_DIVIDE, KEY_CATEGORY);
+	private final KeyBinding keyToggle = new KeyBinding("key.mineshotrevived.ortho.toggle", GLFW_KEY_KP_5,
+			KEY_CATEGORY);
+	private final KeyBinding keyZoomIn = new KeyBinding("key.mineshotrevived.ortho.zoom_in", GLFW_KEY_KP_ADD,
+			KEY_CATEGORY);
+	private final KeyBinding keyZoomOut = new KeyBinding("key.mineshotrevived.ortho.zoom_out", GLFW_KEY_KP_SUBTRACT,
+			KEY_CATEGORY);
+	private final KeyBinding keyRotateL = new KeyBinding("key.mineshotrevived.ortho.rotate_l", GLFW_KEY_KP_4,
+			KEY_CATEGORY);
+	private final KeyBinding keyRotateR = new KeyBinding("key.mineshotrevived.ortho.rotate_r", GLFW_KEY_KP_6,
+			KEY_CATEGORY);
+	private final KeyBinding keyRotateU = new KeyBinding("key.mineshotrevived.ortho.rotate_u", GLFW_KEY_KP_8,
+			KEY_CATEGORY);
+	private final KeyBinding keyRotateD = new KeyBinding("key.mineshotrevived.ortho.rotate_d", GLFW_KEY_KP_2,
+			KEY_CATEGORY);
+	private final KeyBinding keyRotateT = new KeyBinding("key.mineshotrevived.ortho.rotate_t", GLFW_KEY_KP_7,
+			KEY_CATEGORY);
+	private final KeyBinding keyRotateF = new KeyBinding("key.mineshotrevived.ortho.rotate_f", GLFW_KEY_KP_1,
+			KEY_CATEGORY);
+	private final KeyBinding keyRotateS = new KeyBinding("key.mineshotrevived.ortho.rotate_s", GLFW_KEY_KP_3,
+			KEY_CATEGORY);
+	private final KeyBinding keyClip = new KeyBinding("key.mineshotrevived.ortho.clip", GLFW_KEY_KP_MULTIPLY,
+			KEY_CATEGORY);
+	private final KeyBinding keyMod = new KeyBinding("key.mineshotrevived.ortho.mod", GLFW_KEY_LEFT_ALT, KEY_CATEGORY);
+	private final KeyBinding key360 = new KeyBinding("key.mineshotrevived.ortho.render360", GLFW_KEY_KP_DIVIDE,
+			KEY_CATEGORY);
+	private final KeyBinding keyBackground = new KeyBinding("key.mineshotrevived.ortho.background", GLFW_KEY_KP_DECIMAL,
+			KEY_CATEGORY);
 
 	private boolean enabled;
 	private boolean render360;
 	private boolean frustumUpdate;
 	private boolean freeCam;
 	private boolean clip;
+	private int background;
 
 	private float zoom;
 	private float xRot;
@@ -88,6 +91,7 @@ public class OrthoViewHandler {
 		KeyBindingHelper.registerKeyBinding(keyClip);
 		KeyBindingHelper.registerKeyBinding(keyMod);
 		KeyBindingHelper.registerKeyBinding(key360);
+		KeyBindingHelper.registerKeyBinding(keyBackground);
 
 		reset();
 	}
@@ -132,12 +136,12 @@ public class OrthoViewHandler {
 			partialPrevious = partial;
 		}
 
-		float width = zoom * (MC.getWindow().getFramebufferWidth()
-				/ (float) MC.getWindow().getFramebufferHeight());
+		float width = zoom * (MC.getWindow().getFramebufferWidth() / (float) MC.getWindow().getFramebufferHeight());
 		float height = zoom;
 
 		// Override projection matrix
-		// Top and bottom are swapped inside projectionMatrix (which is basically equivalent to glOrtho)
+		// Top and bottom are swapped inside projectionMatrix (which is basically
+		// equivalent to glOrtho)
 		Matrix4f matrix4f = Matrix4f.projectionMatrix(-width, width, height, -height, clip ? 0 : -9999, 9999);
 		RenderSystem.setProjectionMatrix(matrix4f);
 		return matrix4f;
@@ -154,15 +158,20 @@ public class OrthoViewHandler {
 			return null;
 		}
 
-		float width = zoom * (MC.getWindow().getFramebufferWidth()
-				/ (float) MC.getWindow().getFramebufferHeight());
+		float width = zoom * (MC.getWindow().getFramebufferWidth() / (float) MC.getWindow().getFramebufferHeight());
 		float height = zoom;
 
 		// Override projection matrix
-		// Top and bottom are swapped inside projectionMatrix (which is basically equivalent to glOrtho)
+		// Top and bottom are swapped inside projectionMatrix (which is basically
+		// equivalent to glOrtho)
 		// FIXME: For some reason the client crashes now when clipping too much here.
-		Matrix4f matrix4f = Matrix4f.projectionMatrix(-Math.max(10, width), Math.max(10, width), Math.max(10, height), -Math.max(10, height), -9999, 9999);
+		Matrix4f matrix4f = Matrix4f.projectionMatrix(-Math.max(10, width), Math.max(10, width), Math.max(10, height),
+				-Math.max(10, height), -9999, 9999);
 		return matrix4f;
+	}
+
+	public int getBackground() {
+		return background;
 	}
 
 	// Called by KeyboardMixin
@@ -176,6 +185,8 @@ public class OrthoViewHandler {
 			} else {
 				toggle();
 			}
+		} else if (keyBackground.isPressed()) {
+			circleBackground();
 		} else if (!enabled) {
 			return;
 		} else if (keyClip.isPressed()) {
@@ -195,7 +206,8 @@ public class OrthoViewHandler {
 		}
 
 		// Update stepped rotation/zoom controls
-		// Note: the smooth controls are handled in onWorldRenderer, since they need to be
+		// Note: the smooth controls are handled in onWorldRenderer, since they need to
+		// be
 		// executed on every frame
 		if (mod) {
 			updateZoomAndRotation(1);
@@ -239,6 +251,14 @@ public class OrthoViewHandler {
 		}
 	}
 
+	private void circleBackground() {
+		if (background == 2) {
+			background = 0;
+		} else {
+			background++;
+		}
+	}
+
 	private boolean modifierKeyPressed() {
 		return keyMod.isPressed();
 	}
@@ -247,14 +267,16 @@ public class OrthoViewHandler {
 		if (keyZoomIn.isPressed()) {
 			zoom *= 1 - ZOOM_STEP * multi;
 
-			// Because zooming is not a native game mechanic, it doesn't trigger a terrain update
+			// Because zooming is not a native game mechanic, it doesn't trigger a terrain
+			// update
 			if (render360)
 				MC.worldRenderer.scheduleTerrainUpdate();
 		}
 		if (keyZoomOut.isPressed()) {
 			zoom *= 1 + ZOOM_STEP * multi;
 
-			// Because zooming is not a native game mechanic, it doesn't trigger a terrain update
+			// Because zooming is not a native game mechanic, it doesn't trigger a terrain
+			// update
 			if (render360)
 				MC.worldRenderer.scheduleTerrainUpdate();
 		}

@@ -8,7 +8,8 @@ import java.io.IOException;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.util.Formatting;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.ClickEvent;
 
 public class ChatUtils {
@@ -20,7 +21,7 @@ public class ChatUtils {
 		}
 
 		ChatHud chat = MC.inGameHud.getChatHud();
-		TranslatableText ret = new TranslatableText(msg, args);
+		Text ret = Text.translatable(msg, args);
 		ret.getStyle().withColor(format);
 
 		chat.addMessage(ret);
@@ -31,7 +32,7 @@ public class ChatUtils {
 	}
 
 	public static void printFileLink(String msg, File file) {
-		TranslatableText text = new TranslatableText(file.getName());
+		MutableText text = Text.translatable(file.getName());
 		String path;
 
 		try {
