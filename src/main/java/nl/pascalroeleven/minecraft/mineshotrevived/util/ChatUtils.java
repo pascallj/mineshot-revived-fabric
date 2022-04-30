@@ -21,7 +21,7 @@ public class ChatUtils {
 		}
 
 		ChatHud chat = MC.inGameHud.getChatHud();
-		Text ret = Text.translatable(msg, args);
+		MutableText ret = Text.translatable(msg, args);
 		ret.getStyle().withColor(format);
 
 		chat.addMessage(ret);
