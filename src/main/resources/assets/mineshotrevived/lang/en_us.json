@@ -14,6 +14,7 @@
 	"key.mineshotrevived.ortho.zoom_in": "Zoom in",
 	"key.mineshotrevived.ortho.zoom_out": "Zoom out",
 	"key.mineshotrevived.ortho.render360": "Render full 360 degrees",
+	"key.mineshotrevived.ortho.background": "Change background",
 	"mineshotrevived.config.height": "Capture Height (px)",
 	"mineshotrevived.config.notify_dev": "Notify on dev-versions",
 	"mineshotrevived.config.notify_incompatible": "Notify on incompatible versions",
