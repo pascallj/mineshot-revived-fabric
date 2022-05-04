@@ -38,6 +38,8 @@ The controls are slightly different compared to the original Mineshot:
 * Multiply: Turn clipping off
 * Divide: Render full 360 degrees around player
 * Demical dot: Change the background color between sky, red and white
+* Numpad 0: Save the current rotation and zoom level to restore them the next time the ortho view is enabled
+* MOD-key (Left Alt) + Numpad 0: Delete the saved rotation and zoom level
 
 The key-bindings can be changed in the Minecraft Controls menu.
 
