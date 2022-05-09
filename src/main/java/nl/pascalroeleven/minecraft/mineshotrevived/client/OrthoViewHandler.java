@@ -8,6 +8,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_5;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_6;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_7;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_8;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_DECIMAL;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_ADD;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_DIVIDE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_MULTIPLY;
@@ -59,12 +60,15 @@ public class OrthoViewHandler {
 			GLFW_KEY_LEFT_ALT, KEY_CATEGORY);
 	private final KeyBinding key360 = new KeyBinding("key.mineshotrevived.ortho.render360",
 			GLFW_KEY_KP_DIVIDE, KEY_CATEGORY);
+	private final KeyBinding keyBackground = new KeyBinding("key.mineshotrevived.ortho.background",
+			GLFW_KEY_KP_DECIMAL, KEY_CATEGORY);
 
 	private boolean enabled;
 	private boolean render360;
 	private boolean frustumUpdate;
 	private boolean freeCam;
 	private boolean clip;
+	private int background;
 
 	private float zoom;
 	private float xRot;
@@ -88,6 +92,7 @@ public class OrthoViewHandler {
 		KeyBindingHelper.registerKeyBinding(keyClip);
 		KeyBindingHelper.registerKeyBinding(keyMod);
 		KeyBindingHelper.registerKeyBinding(key360);
+		KeyBindingHelper.registerKeyBinding(keyBackground);
 
 		reset();
 	}
@@ -165,6 +170,10 @@ public class OrthoViewHandler {
 		return matrix4f;
 	}
 
+	public int getBackground() {
+		return background;
+	}
+
 	// Called by KeyboardMixin
 	public void onKeyEvent() {
 		boolean mod = modifierKeyPressed();
@@ -176,6 +185,8 @@ public class OrthoViewHandler {
 			} else {
 				toggle();
 			}
+		} else if (keyBackground.isPressed()) {
+			circleBackground();
 		} else if (!enabled) {
 			return;
 		} else if (keyClip.isPressed()) {
@@ -239,6 +250,14 @@ public class OrthoViewHandler {
 		}
 	}
 
+	private void circleBackground() {
+		if (background == 2) {
+			background = 0;
+		} else {
+			background++;
+		}
+  }
+  
 	private void setZoom(float d) {
 		zoom = d;
 		// Because zooming is not a native game mechanic, it doesn't trigger a terrain
