@@ -29,7 +29,7 @@ public class OrthoViewHandler {
 	private static final MinecraftClient MC = MinecraftClient.getInstance();
 	private static final PropertiesHandler properties = Mineshot.getPropertiesHandler();
 	private static final String KEY_CATEGORY = "key.categories.mineshotrevived";
-	private static final float ZOOM_STEP = 0.5f;
+	private static final float ZOOM_STEP = 2f;
 	private static final float ROTATE_STEP = 15;
 	private static final float ROTATE_SPEED = 4;
 	private static final float SECONDS_PER_TICK = 1f / 20f;
@@ -213,7 +213,7 @@ public class OrthoViewHandler {
 			// Snap values to step units
 			xRot = Math.round(xRot / ROTATE_STEP) * ROTATE_STEP;
 			yRot = Math.round(yRot / ROTATE_STEP) * ROTATE_STEP;
-			zoom = Math.round(zoom / ZOOM_STEP) * ZOOM_STEP;
+			zoom = (float) Math.pow(ZOOM_STEP, Math.round(Math.log10(zoom) / Math.log10(ZOOM_STEP)));
 		}
 	}
 
@@ -222,7 +222,7 @@ public class OrthoViewHandler {
 		clip = false;
 		render360 = false;
 
-		zoom = 8;
+		zoom = (float) Math.pow(ZOOM_STEP, 3);
 		xRot = Integer.parseInt(properties.get("xRotation"));
 		yRot = Integer.parseInt(properties.get("yRotation"));
 		tick = 0;
@@ -256,6 +256,14 @@ public class OrthoViewHandler {
 		} else {
 			background++;
 		}
+  }
+  
+	private void setZoom(float d) {
+		zoom = d;
+		// Because zooming is not a native game mechanic, it doesn't trigger a terrain
+		// update
+		if (render360)
+			MC.worldRenderer.scheduleTerrainUpdate();
 	}
 
 	private boolean modifierKeyPressed() {
@@ -264,18 +272,10 @@ public class OrthoViewHandler {
 
 	private void updateZoomAndRotation(double multi) {
 		if (keyZoomIn.isPressed()) {
-			zoom *= 1 - ZOOM_STEP * multi;
-
-			// Because zooming is not a native game mechanic, it doesn't trigger a terrain update
-			if (render360)
-				MC.worldRenderer.scheduleTerrainUpdate();
+			setZoom((float) Math.max(1E-7, (zoom / (1 + ((ZOOM_STEP - 1) * multi)))));
 		}
 		if (keyZoomOut.isPressed()) {
-			zoom *= 1 + ZOOM_STEP * multi;
-
-			// Because zooming is not a native game mechanic, it doesn't trigger a terrain update
-			if (render360)
-				MC.worldRenderer.scheduleTerrainUpdate();
+			setZoom((float) (zoom * (1 + ((ZOOM_STEP - 1) * multi))));
 		}
 
 		if (keyRotateL.isPressed()) {
