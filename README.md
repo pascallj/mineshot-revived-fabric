@@ -13,7 +13,7 @@ The majority of the code is based on the original [Mineshot by Barracuda](https:
 
 The main purpose of this project is to keep Mineshot alive by updating for newer Minecraft/Fabric versions. I previously ported a version for [Minecraft Forge](https://github.com/pascallj/mineshot-revived) as well, but during the development I discovered that I prefer Fabric much more. Especially the fast updates for new Minecraft versions. I'll keep the old project around for now, but I am not sure if there will be any future updates.
 
-There is support for Minecraft 1.18.x, while old versions are available for 1.17 and 1.16.x.
+There is support for Minecraft 1.19 (beta), 1.18.x, while old versions are available for 1.17 and 1.16.x.
 
 ## Requirements
 Both the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api) and [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu) are required for this mod to function.
@@ -54,3 +54,9 @@ There are several features which aren't working (yet) in Mineshot Revived:
 ## Download
 
 Compiled jars are available on the [releases page](https://github.com/pascallj/mineshot-revived-fabric/releases).
+
+## Development
+
+If you want to help develop this mod, feel free to open issues and or pull requests. A feature request can also be opened as an issue. Please provide as much details as you can when opening issues or pull requests.
+
+A PR should be opened against the `master` branch, except when it requires the next version of Minecraft; then it should opened against the `next` branch.
