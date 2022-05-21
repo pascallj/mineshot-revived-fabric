@@ -40,12 +40,12 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 		this.addSelectableChild(this.optionsListWidget);
 		this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, this.height - 27, 200, 20,
 				ScreenTexts.DONE, (buttonWidget) -> {
-					onClose();
+					close();
 				}));
 	}
 
 	@Override
-	public void onClose() {
+	public void close() {
 		this.properties.set("captureWidth", captureWidth.getText());
 		this.properties.set("captureHeight", captureHeight.getText());
 		this.properties.set("notifyDev", notifyDev.isChecked() ? "true" : "false");
@@ -53,7 +53,7 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 		this.properties.set("xRotation", xRotation.getText());
 		this.properties.set("yRotation", yRotation.getText());
 		this.properties.storeProperties();
-		super.onClose();
+		super.close();
 	}
 
 	@Override
