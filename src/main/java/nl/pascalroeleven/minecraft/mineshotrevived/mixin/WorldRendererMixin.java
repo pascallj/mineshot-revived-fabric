@@ -6,9 +6,11 @@ import org.spongepowered.asm.mixin.injection.Group;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
@@ -51,8 +53,8 @@ public class WorldRendererMixin {
 		}
 	}
 
-	@Inject(method = "renderSky(Lnet/minecraft/client/render/BufferBuilder;F)V", at = @At("HEAD"), cancellable = true)
-	private static void onRenderSky(CallbackInfo ci) {
+	@Inject(method = "renderSky(Lnet/minecraft/client/render/BufferBuilder;F)Lnet/minecraft/client/render/BufferBuilder$BuiltBuffer;", at = @At("HEAD"), cancellable = true)
+	private static void onRenderSky(CallbackInfoReturnable<BufferBuilder.BuiltBuffer> ci) {
 		if (Mineshot.getOrthoViewHandler().getBackground() != 0)
 			ci.cancel();
 	}
