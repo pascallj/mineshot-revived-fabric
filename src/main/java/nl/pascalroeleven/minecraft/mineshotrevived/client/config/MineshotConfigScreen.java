@@ -70,6 +70,7 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 
 			this.addEntry(new TextOptionEntry("captureWidth", "mineshotrevived.config.width"));
 			this.addEntry(new TextOptionEntry("captureHeight", "mineshotrevived.config.height"));
+			this.addEntry(new CheckboxOptionEntry("autoHideHUD", "mineshotrevived.config.auto_hide_hud"));
 			this.addEntry(new TextOptionEntry("xRotation", "mineshotrevived.config.xrotation"));
 			this.addEntry(new TextOptionEntry("yRotation", "mineshotrevived.config.yrotation"));
 			this.addEntry(new CheckboxOptionEntry("notifyDev", "mineshotrevived.config.notify_dev"));
