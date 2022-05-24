@@ -18,11 +18,9 @@ import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.TranslatableText;
 import nl.pascalroeleven.minecraft.mineshotrevived.Mineshot;
-import nl.pascalroeleven.minecraft.mineshotrevived.client.Updater;
 
 public class MineshotConfigScreen extends GameOptionsScreen {
 	private PropertiesHandler properties = Mineshot.getPropertiesHandler();
-	private Updater updater = Mineshot.getUpdater();
 	private OptionsListWidget optionsListWidget;
 
 	protected MineshotConfigScreen(Screen parent, GameOptions options) {
@@ -53,7 +51,7 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 		}
 
 		this.properties.storeProperties();
-		updater.checkVersion();
+		Mineshot.getUpdater().checkVersion();
 		super.close();
 	}
 
