@@ -85,6 +85,15 @@ public class PropertiesHandler {
 			writeConfig = true;
 	}
 
+	public void forceDefaults() {
+		for (Enumeration<?> e = defaults.propertyNames(); e.hasMoreElements();) {
+			String key = (String) e.nextElement();
+			properties.setProperty(key, defaults.getProperty(key));
+		}
+
+		writeConfig = true;
+	}
+
 	public void storeProperties() {
 		if (!Files.exists(configDir)) {
 			try {

@@ -33,9 +33,16 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 	protected void init() {
 		this.optionsListWidget = new OptionsListWidget();
 		this.addSelectableChild(this.optionsListWidget);
-		this.addDrawableChild(
-				new ButtonWidget(this.width / 2 - 100, this.height - 27, 200, 20, ScreenTexts.DONE, (buttonWidget) -> {
+		this.addDrawableChild(new ButtonWidget(this.width / 2 - 155 + 160, this.height - 29, 150, 20, ScreenTexts.DONE,
+				(buttonWidget) -> {
 					close();
+				}));
+		this.addDrawableChild(new ButtonWidget(this.width / 2 - 155, this.height - 29, 150, 20,
+				new TranslatableText("mineshotrevived.config.reset"), (buttonWidget) -> {
+					this.properties.forceDefaults();
+					for (OptionsListWidget.Entry i : optionsListWidget.children()) {
+						i.setValue(properties.get(i.propertyName));
+					}
 				}));
 	}
 
@@ -116,8 +123,13 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 
 			@Override
 			void setValue(String value) {
-				if (value.equalsIgnoreCase("true"))
-					((CheckboxWidget) widget).onPress();
+				if (value.equalsIgnoreCase("true")) {
+					if (!((CheckboxWidget) widget).isChecked())
+						((CheckboxWidget) widget).onPress();
+				} else {
+					if (((CheckboxWidget) widget).isChecked())
+						((CheckboxWidget) widget).onPress();
+				}
 			}
 
 		}
