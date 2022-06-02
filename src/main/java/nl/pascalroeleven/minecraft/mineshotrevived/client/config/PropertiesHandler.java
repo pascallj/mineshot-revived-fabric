@@ -34,6 +34,7 @@ public class PropertiesHandler {
 		defaults.setProperty("notifyIncompatible", "false");
 		defaults.setProperty("xRotation", "30");
 		defaults.setProperty("yRotation", "-45");
+		defaults.setProperty("autoHideHUD", "false");
 
 		if (configFile.exists()) {
 			try (FileInputStream stream = new FileInputStream(configFile)) {
@@ -85,6 +86,15 @@ public class PropertiesHandler {
 			writeConfig = true;
 	}
 
+	public void forceDefaults() {
+		for (Enumeration<?> e = defaults.propertyNames(); e.hasMoreElements();) {
+			String key = (String) e.nextElement();
+			properties.setProperty(key, defaults.getProperty(key));
+		}
+
+		writeConfig = true;
+	}
+
 	public void storeProperties() {
 		if (!Files.exists(configDir)) {
 			try {
@@ -128,6 +138,7 @@ public class PropertiesHandler {
 				break;
 			case "notifyDev":
 			case "notifyIncompatible":
+			case "autoHideHUD":
 				if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false"))
 					return true;
 				break;

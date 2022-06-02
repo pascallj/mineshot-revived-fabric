@@ -81,6 +81,8 @@ public class Updater {
 			SemanticVersion currentVersion = SemanticVersion.parse(current);
 			if (currentVersion.compareTo((Version) update) < 0)
 				newVersion = update.getFriendlyString();
+			else
+				newVersion = null;
 		} catch (VersionParsingException e) {
 			e.printStackTrace();
 		}

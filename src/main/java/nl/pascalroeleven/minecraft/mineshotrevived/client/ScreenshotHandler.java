@@ -13,15 +13,22 @@ import java.util.Date;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+
+
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
+import nl.pascalroeleven.minecraft.mineshotrevived.Mineshot;
 import nl.pascalroeleven.minecraft.mineshotrevived.client.capture.task.CaptureTask;
 import nl.pascalroeleven.minecraft.mineshotrevived.client.capture.task.RenderTickTask;
+import nl.pascalroeleven.minecraft.mineshotrevived.client.config.PropertiesHandler;
 import nl.pascalroeleven.minecraft.mineshotrevived.util.ChatUtils;
 
 public class ScreenshotHandler {
 	private static final Logger L = LogManager.getLogger();
+	private PropertiesHandler properties = Mineshot.getPropertiesHandler();
+	private static MinecraftClient client = MinecraftClient.getInstance();
 	private static final String KEY_CATEGORY = "key.categories.mineshotrevived";
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
 
@@ -32,6 +39,7 @@ public class ScreenshotHandler {
 	private RenderTickTask task;
 	
 	private fbChangeTask fbTask = null;
+	private boolean previousHud;
 
 	public ScreenshotHandler() {
 		KeyBindingHelper.registerKeyBinding(keyCapture);
@@ -45,6 +53,10 @@ public class ScreenshotHandler {
 		}
 
 		if (keyCapture.isPressed()) {
+			if (properties.get("autoHideHUD").equalsIgnoreCase("true")) {
+				previousHud = client.options.hudHidden;
+				client.options.hudHidden = true;
+			}
 			taskFile = getScreenshotFile();
 			task = new CaptureTask(taskFile);
 		}
@@ -60,11 +72,17 @@ public class ScreenshotHandler {
 			if (task.onRenderTick()) {
 				task = null;
 				ChatUtils.printFileLink("screenshot.success", taskFile.toFile());
+				if (properties.get("autoHideHUD").equalsIgnoreCase("true")) {
+					client.options.hudHidden = previousHud;
+				}
 			}
 		} catch (Exception ex) {
 			L.error("Screenshot capture failed", ex);
 			ChatUtils.print("screenshot.failure", ex.getMessage());
 			task = null;
+			if (properties.get("autoHideHUD").equalsIgnoreCase("true")) {
+				client.options.hudHidden = previousHud;
+			}
 		}
 	}
 	
