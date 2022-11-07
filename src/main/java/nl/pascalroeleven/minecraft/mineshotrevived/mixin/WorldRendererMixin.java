@@ -2,7 +2,6 @@ package nl.pascalroeleven.minecraft.mineshotrevived.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Group;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -59,18 +58,8 @@ public class WorldRendererMixin {
 			ci.cancel();
 	}
 
-	// Group renderSky injection for <1.18.2 compatibility
-	@Group(name = "renderSky", min = 1, max = 1)
 	@Inject(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lorg/joml/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V", at = @At("HEAD"), cancellable = true)
 	private void onRenderSky2(CallbackInfo ci) {
-		if (Mineshot.getOrthoViewHandler().getBackground() != 0)
-			ci.cancel();
-	}
-
-	// Minecraft <1.18.2 compatibility
-	@Group(name = "renderSky")
-	@Inject(method = "method_3257(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLjava/lang/Runnable;)V", at = @At("HEAD"), cancellable = true)
-	private void onRenderSky3(CallbackInfo ci) {
 		if (Mineshot.getOrthoViewHandler().getBackground() != 0)
 			ci.cancel();
 	}
