@@ -31,17 +31,15 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 	protected void init() {
 		this.optionsListWidget = new OptionsListWidget();
 		this.addSelectableChild(this.optionsListWidget);
-		this.addDrawableChild(new ButtonWidget(this.width / 2 - 155 + 160, this.height - 29, 150, 20, ScreenTexts.DONE,
-				(buttonWidget) -> {
-					close();
-				}));
-		this.addDrawableChild(new ButtonWidget(this.width / 2 - 155, this.height - 29, 150, 20,
-				Text.translatable("mineshotrevived.config.reset"), (buttonWidget) -> {
-					this.properties.forceDefaults();
-					for (OptionsListWidget.Entry i : optionsListWidget.children()) {
-						i.setValue(properties.get(i.propertyName));
-					}
-				}));
+		this.addDrawableChild(ButtonWidget.createBuilder(ScreenTexts.DONE, button -> {
+			this.close();
+		}).setPositionAndSize(this.width / 2 - 155 + 160, this.height - 29, 150, 20).build());
+		this.addDrawableChild(ButtonWidget.createBuilder(Text.translatable("mineshotrevived.config.reset"), button -> {
+			this.properties.forceDefaults();
+			for (OptionsListWidget.Entry i : optionsListWidget.children()) {
+				i.setValue(properties.get(i.propertyName));
+			}
+		}).setPositionAndSize(this.width / 2 - 155, this.height - 29, 150, 20).build());
 	}
 
 	@Override
@@ -157,8 +155,8 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 					int mouseX, int mouseY, boolean hovered, float tickDelta) {
 				textRenderer.draw(matrices, widget.getMessage(), MineshotConfigScreen.this.width / 2 - MARGIN, y + 7,
 						0xFFFFFF);
-				widget.x = MineshotConfigScreen.this.width / 2 + MARGIN - 50;
-				widget.y = y;
+				widget.setX(MineshotConfigScreen.this.width / 2 + MARGIN - 50);
+				widget.setY(y);
 				widget.render(matrices, mouseX, mouseY, tickDelta);
 			}
 

@@ -31,10 +31,10 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.14.3",
-    "fabric": ">=0.51.3+1.19",
-    "minecraft": ">=1.19-alpha.22.17.a",
+    "fabricloader": ">=0.14.10",
+    "fabric": ">=0.65.1+1.19.3",
+    "minecraft": ">=1.19.3-alpha.22.43.a",
     "java": ">=17",
-    "modmenu": ">=4.0.0-beta.3"
+    "modmenu": ">=5.0.0-alpha.1"
   }
 }

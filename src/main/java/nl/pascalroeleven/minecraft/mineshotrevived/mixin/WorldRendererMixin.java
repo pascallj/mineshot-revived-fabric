@@ -13,7 +13,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Matrix4f;
+import org.joml.Matrix4f;
 import nl.pascalroeleven.minecraft.mineshotrevived.Mineshot;
 
 @Mixin(WorldRenderer.class)
@@ -61,7 +61,7 @@ public class WorldRendererMixin {
 
 	// Group renderSky injection for <1.18.2 compatibility
 	@Group(name = "renderSky", min = 1, max = 1)
-	@Inject(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lorg/joml/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V", at = @At("HEAD"), cancellable = true)
 	private void onRenderSky2(CallbackInfo ci) {
 		if (Mineshot.getOrthoViewHandler().getBackground() != 0)
 			ci.cancel();

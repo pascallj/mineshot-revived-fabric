@@ -20,7 +20,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
-import net.minecraft.util.math.Matrix4f;
+import org.joml.Matrix4f;
 import nl.pascalroeleven.minecraft.mineshotrevived.Mineshot;
 import nl.pascalroeleven.minecraft.mineshotrevived.client.config.PropertiesHandler;
 import nl.pascalroeleven.minecraft.mineshotrevived.mixin.CameraInvoker;
@@ -142,8 +142,7 @@ public class OrthoViewHandler {
 		float height = zoom;
 
 		// Override projection matrix
-		// Top and bottom are swapped inside projectionMatrix (which is basically equivalent to glOrtho)
-		Matrix4f matrix4f = Matrix4f.projectionMatrix(-width, width, height, -height, clip ? 0 : -9999, 9999);
+		Matrix4f matrix4f = new Matrix4f().setOrtho(-width, width, -height, height, clip ? 0 : -9999, 9999);
 		RenderSystem.setProjectionMatrix(matrix4f);
 		return matrix4f;
 	}
@@ -164,9 +163,8 @@ public class OrthoViewHandler {
 		float height = zoom;
 
 		// Override projection matrix
-		// Top and bottom are swapped inside projectionMatrix (which is basically equivalent to glOrtho)
 		// FIXME: For some reason the client crashes now when clipping too much here.
-		Matrix4f matrix4f = Matrix4f.projectionMatrix(-Math.max(10, width), Math.max(10, width), Math.max(10, height), -Math.max(10, height), -9999, 9999);
+		Matrix4f matrix4f = new Matrix4f().setOrtho(-Math.max(10, width), Math.max(10, width), -Math.max(10, height), Math.max(10, height), -9999, 9999);
 		return matrix4f;
 	}
 
