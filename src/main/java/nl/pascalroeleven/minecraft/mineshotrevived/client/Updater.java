@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
 
 import org.apache.commons.io.IOUtils;
 
@@ -17,12 +18,11 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.VersionParsingException;
-import net.minecraft.client.MinecraftClient;
+import net.fabricmc.loader.impl.util.version.SemanticVersionImpl;
 import nl.pascalroeleven.minecraft.mineshotrevived.Mineshot;
 import nl.pascalroeleven.minecraft.mineshotrevived.client.config.PropertiesHandler;
 
 public class Updater {
-	private static final MinecraftClient MC = MinecraftClient.getInstance();
 	private PropertiesHandler properties = Mineshot.getPropertiesHandler();
 	private String newVersion = null;
 	private final String DOWNLOAD_URL = "https://pascallj.github.io/mineshot-revived-fabric/versions.json";
@@ -52,22 +52,23 @@ public class Updater {
 		}
 
 		try {
-			String releaseVersion = MC.getGame().getVersion().getReleaseTarget();
+			int[] mcVersionComponents = ((SemanticVersionImpl) FabricLoader.getInstance().getModContainer("minecraft").get().getMetadata().getVersion()).getVersionComponents();
+			SemanticVersion releaseTarget = new SemanticVersionImpl(mcVersionComponents, null, null);
 
 			// If no direct match for the version, check for wildcard version
-			if (jsonObject.get(releaseVersion) == null) {
-				SemanticVersion mcVersion = SemanticVersion.parse(releaseVersion);
-				int i = mcVersion.getVersionComponentCount();
-				do {
-					if (i == 0) {
-						releaseVersion = null;
-						break;
-					}
-					releaseVersion = buildWildcardVersion(mcVersion, i);
-					i--;
-				} while (jsonObject.get(releaseVersion) == null);
+			if (jsonObject.get(releaseTarget.getFriendlyString()) == null) {
+				int[] versionComponents = Arrays.copyOfRange(mcVersionComponents, 0, releaseTarget.getVersionComponentCount() + 1);
 
-				if (releaseVersion == null)
+				for (int i = versionComponents.length; i > 1; i--) {
+					versionComponents[i-1] = SemanticVersion.COMPONENT_WILDCARD;
+					releaseTarget = new SemanticVersionImpl(Arrays.copyOfRange(versionComponents, 0, i) , null, null);
+
+					if (jsonObject.get(releaseTarget.getFriendlyString()) != null)
+						break;
+				}
+
+				// No version could be matched
+				if (jsonObject.get(releaseTarget.getFriendlyString()) == null)
 					return;
 			}
 
@@ -75,7 +76,7 @@ public class Updater {
 			if (properties.get("notifyIncompatible").equalsIgnoreCase("true")) {
 				update = SemanticVersion.parse(jsonObject.get(channel).getAsString());
 			} else {
-				update = SemanticVersion.parse(jsonObject.get(releaseVersion).getAsJsonObject().get(channel).getAsString());
+				update = SemanticVersion.parse(jsonObject.get(releaseTarget.getFriendlyString()).getAsJsonObject().get(channel).getAsString());
 			}
 
 			SemanticVersion currentVersion = SemanticVersion.parse(current);
@@ -123,19 +124,5 @@ public class Updater {
 		}
 
 		return null;
-	}
-
-	private String buildWildcardVersion(SemanticVersion version, int components) {
-		// Build the version string with last component as wildcard
-		String wildcardVersion = "";
-		for (int i = 0; i <= components-1; i++) {
-			if (i == components-1) {
-				wildcardVersion += "x";
-				break;
-			}
-			wildcardVersion += version.getVersionComponent(i) + "." ;
-		}
-
-		return wildcardVersion;
 	}
 }
