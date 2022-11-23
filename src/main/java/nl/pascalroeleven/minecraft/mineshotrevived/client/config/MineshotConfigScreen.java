@@ -31,15 +31,15 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 	protected void init() {
 		this.optionsListWidget = new OptionsListWidget();
 		this.addSelectableChild(this.optionsListWidget);
-		this.addDrawableChild(ButtonWidget.createBuilder(ScreenTexts.DONE, button -> {
+		this.addDrawableChild(ButtonWidget.builder(ScreenTexts.DONE, button -> {
 			this.close();
-		}).setPositionAndSize(this.width / 2 - 155 + 160, this.height - 29, 150, 20).build());
-		this.addDrawableChild(ButtonWidget.createBuilder(Text.translatable("mineshotrevived.config.reset"), button -> {
+		}).dimensions(this.width / 2 - 155 + 160, this.height - 29, 150, 20).build());
+		this.addDrawableChild(ButtonWidget.builder(Text.translatable("mineshotrevived.config.reset"), button -> {
 			this.properties.forceDefaults();
 			for (OptionsListWidget.Entry i : optionsListWidget.children()) {
 				i.setValue(properties.get(i.propertyName));
 			}
-		}).setPositionAndSize(this.width / 2 - 155, this.height - 29, 150, 20).build());
+		}).dimensions(this.width / 2 - 155, this.height - 29, 150, 20).build());
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class MineshotConfigScreen extends GameOptionsScreen {
 			this.addEntry(new CheckboxOptionEntry("notifyDev", "mineshotrevived.config.notify_dev"));
 			this.addEntry(new CheckboxOptionEntry("notifyIncompatible", "mineshotrevived.config.notify_incompatible"));
 
-			for (Entry i : this.children()) {
+			for (nl.pascalroeleven.minecraft.mineshotrevived.client.config.MineshotConfigScreen.OptionsListWidget.Entry i : this.children()) {
 				i.setValue(properties.get(i.propertyName));
 			}
 		}
