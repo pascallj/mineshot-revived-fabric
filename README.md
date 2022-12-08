@@ -53,10 +53,25 @@ There are several features which aren't working (yet) in Mineshot Revived:
 
 ## Download
 
+Depending on the Minecraft version you want to use Mineshot on, you need different versions as can be seen in the tables below:
+
+| Minecraft Version | Mineshot version |
+| ----------------- | ---------------- |
+| 1.19.3 | 5.0.0 |
+| 1.19-1.19.2 | 4.0.0 |
+
+### Discontinued
+
+| Minecraft Version | Mineshot version |
+| ----------------- | ---------------- |
+| 1.18 | 3.1.2 |
+| 1.17 | 2.0.0 |
+| 1.16 | 1.0.0 |
+
 Compiled jars are available on the [releases page](https://github.com/pascallj/mineshot-revived-fabric/releases).
 
 ## Development
 
-If you want to help develop this mod, feel free to open issues and or pull requests. A feature request can also be opened as an issue. Please provide as much details as you can when opening issues or pull requests.
+If you want to help develop this mod, feel free to open issues and/or pull requests. A feature request can also be opened as an issue. Please provide as much details as you can when opening issues or pull requests.
 
-A PR should be opened against the `master` branch, except when it requires the next version of Minecraft; then it should opened against the `next` branch.
+A PR should target the `master` branch if it targets the latest stable Minecraft release, the `next` branch if it targets the next development version of Minecraft and the branch with the corresponding version number (e.g., `1.19`) when it targets a backport bug/issue.
