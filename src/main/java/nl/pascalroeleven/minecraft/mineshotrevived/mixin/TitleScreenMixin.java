@@ -3,7 +3,7 @@ package nl.pascalroeleven.minecraft.mineshotrevived.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.gui.screen.Screen;
@@ -18,11 +18,11 @@ public class TitleScreenMixin extends Screen {
 		super(title);
 	}
 
-	private int l;
+	private int color;
 
-	@ModifyVariable(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/TitleScreen;drawStringWithShadow(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/font/TextRenderer;Ljava/lang/String;III)V"), ordinal = 4)
-	private int getL(int variable) {
-		return l = variable;
+	@ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/TitleScreen;drawStringWithShadow(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/font/TextRenderer;Ljava/lang/String;III)V", ordinal = 0), index = 5)
+	private int getColor(int color) {
+		return this.color = color;
 	}
 
 	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/TitleScreen;drawStringWithShadow(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/font/TextRenderer;Ljava/lang/String;III)V"))
@@ -31,7 +31,7 @@ public class TitleScreenMixin extends Screen {
 		String newVersion = Mineshot.getUpdater().getNewVersion();
 		if (newVersion != null) {
 			String updateMsg = "Version '" + newVersion + "' of Mineshot Revived is available!";
-			drawStringWithShadow(matrices, this.textRenderer, updateMsg, 2, 2, 16777215 | l);
+			drawStringWithShadow(matrices, this.textRenderer, updateMsg, 2, 2, color);
 		}
 	}
 }
