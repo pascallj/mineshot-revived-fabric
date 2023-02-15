@@ -23,7 +23,7 @@ public class TitleScreenMixin extends Screen {
 
 		if (newVersion != null) {
 			String updateMsg = "Version '" + newVersion + "' of Mineshot Revived is available!";
-			drawStringWithShadow(matrices, textRenderer, updateMsg, 2, 2, color);
+			drawTextWithShadow(matrices, textRenderer, updateMsg, 2, 2, color);
 		}
 
 		return color;
