@@ -17,7 +17,7 @@ public class TitleScreenMixin extends Screen {
 		super(title);
 	}
 
-	@ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/TitleScreen;drawStringWithShadow(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/font/TextRenderer;Ljava/lang/String;III)V", ordinal = 0), index = 5)
+	@ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/TitleScreen;drawTextWithShadow(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/font/TextRenderer;Ljava/lang/String;III)V", ordinal = 0), index = 5)
 	private int getColor(MatrixStack matrices, TextRenderer textRenderer, String text, int x, int y, int color) {
 		String newVersion = Mineshot.getUpdater().getNewVersion();
 
