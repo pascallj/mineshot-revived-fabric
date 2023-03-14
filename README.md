@@ -57,8 +57,8 @@ Depending on the Minecraft version you want to use Mineshot on, you need differe
 
 | Minecraft Version | Mineshot version |
 | ----------------- | ---------------- |
-| 1.19.3 | 5.0.0 |
-| 1.19-1.19.2 | 4.0.0 |
+| 1.19.3&#8211;1.19.4 | 5.1.0 |
+| 1.19&#8211;1.19.2 | 4.0.0 |
 
 ### Discontinued
 
