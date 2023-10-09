@@ -7,7 +7,7 @@ This can be useful for a variety of scenarios:
 * High quality wallpapers
 * Poster images
 * Map overviews
-* Mob and block images for the [Minecraft Wiki](https://minecraft.fandom.com/wiki/Minecraft_Wiki)
+* Mob and block images for the [Minecraft Wiki](https://minecraft.wiki)
 
 The majority of the code is based on the original [Mineshot by Barracuda](https://github.com/ata4/mineshot). So, many thanks to the original creator. Unfortunately that project seems dead, probably because of the big changes which were introduced.
 
