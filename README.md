@@ -1,5 +1,8 @@
 # Mineshot Revived (Fabric mod for Minecraft)
 
+> ## ⚠️ Deprecation notice
+> This repository has now been archived. My interest in Minecraft and mods for it have fallen and there was never really a big demand for this mod either. You can try the mod [Fabrishot](https://www.curseforge.com/minecraft/mc-mods/fabrishot) as suggested by one of our community members.
+
 Mineshot Revived is a mod for Minecraft (using Fabric) for creating high-resolution screenshots, optionally using the orthographic camera.
 
 This can be useful for a variety of scenarios:
